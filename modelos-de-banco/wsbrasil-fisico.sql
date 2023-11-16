@@ -372,7 +372,16 @@ BEGIN
 	VALUES(@q_vaga, @q_quarto, @q_suite, @q_banheiro, @areaUtil, @valorImovel, @observacoes, @fkTipoImovel, @fkEndereco, @fkTipoAnuncio);
 END;
 
-EXEC InserirImovel @q_vaga = , @q_quarto = , @q_suite = , @q_banheiro = , @areaUtil = , @valorImovel = , @observacoes = '', @fkTipoImovel = , @fkEndereco = , @fkTipoAnuncio = ;
+EXEC InserirImovel @q_vaga = 3, @q_quarto = 4, @q_suite = 1, @q_banheiro = 3, @areaUtil = 250, @valorImovel = 300000, @observacoes = '', @fkTipoImovel = 1, @fkEndereco = 1, @fkTipoAnuncio = 1;
+EXEC InserirImovel @q_vaga = 2, @q_quarto = 3, @q_suite = 1, @q_banheiro = 3, @areaUtil = 250, @valorImovel = 250000, @observacoes = '', @fkTipoImovel = 2, @fkEndereco = 2, @fkTipoAnuncio = 2;
+EXEC InserirImovel @q_vaga = 4, @q_quarto = 5, @q_suite = 2, @q_banheiro = 4, @areaUtil = 300, @valorImovel = 400000, @observacoes = '', @fkTipoImovel = 1, @fkEndereco = 3, @fkTipoAnuncio = 1;
+EXEC InserirImovel @q_vaga = 3, @q_quarto = 4, @q_suite = 1, @q_banheiro = 3, @areaUtil = 250, @valorImovel = 350000, @observacoes = '', @fkTipoImovel = 2, @fkEndereco = 4, @fkTipoAnuncio = 2;
+EXEC InserirImovel @q_vaga = 2, @q_quarto = 3, @q_suite = 1, @q_banheiro = 3, @areaUtil = 250, @valorImovel = 290000, @observacoes = '', @fkTipoImovel = 1, @fkEndereco = 5, @fkTipoAnuncio = 1;
+EXEC InserirImovel @q_vaga = 4, @q_quarto = 5, @q_suite = 2, @q_banheiro = 4, @areaUtil = 300, @valorImovel = 450000, @observacoes = '', @fkTipoImovel = 2, @fkEndereco = 6, @fkTipoAnuncio = 2;
+EXEC InserirImovel @q_vaga = 3, @q_quarto = 4, @q_suite = 1, @q_banheiro = 3, @areaUtil = 250, @valorImovel = 300000, @observacoes = '', @fkTipoImovel = 1, @fkEndereco = 7, @fkTipoAnuncio = 1;
+EXEC InserirImovel @q_vaga = 2, @q_quarto = 3, @q_suite = 1, @q_banheiro = 3, @areaUtil = 250, @valorImovel = 250000, @observacoes = '', @fkTipoImovel = 2, @fkEndereco = 8, @fkTipoAnuncio = 2;
+EXEC InserirImovel @q_vaga = 4, @q_quarto = 5, @q_suite = 2, @q_banheiro = 4, @areaUtil = 300, @valorImovel = 400000, @observacoes = '', @fkTipoImovel = 1, @fkEndereco = 9, @fkTipoAnuncio = 1;
+
 
 --TABELA Imagem-------------------------------------------------------------------------------
 IF OBJECT_ID('InserirImagem','P') IS NOT NULL
@@ -389,7 +398,24 @@ BEGIN
 	INSERT INTO Imagem(Nome_Imagem, url, fk_Imovel_ID) VALUES(@nomeImagem, @url, @fkImovel);
 END;
 
-EXEC InserirImagem @nomeImagem = '', @url = '', @fkImovel ;
+EXEC InserirImagem @nomeImagem = '1-1', @url = '', @fkImovel 1;
+EXEC InserirImagem @nomeImagem = '1-2', @url = '', @fkImovel 1;
+EXEC InserirImagem @nomeImagem = '2-1', @url = '', @fkImovel 2;
+EXEC InserirImagem @nomeImagem = '2-2', @url = '', @fkImovel 2;
+EXEC InserirImagem @nomeImagem = '3-1', @url = '', @fkImovel 3;
+EXEC InserirImagem @nomeImagem = '3-2', @url = '', @fkImovel 3;
+EXEC InserirImagem @nomeImagem = '4-1', @url = '', @fkImovel 4;
+EXEC InserirImagem @nomeImagem = '4-2', @url = '', @fkImovel 4;
+EXEC InserirImagem @nomeImagem = '5-1', @url = '', @fkImovel 5;
+EXEC InserirImagem @nomeImagem = '5-2', @url = '', @fkImovel 5;
+EXEC InserirImagem @nomeImagem = '6-1', @url = '', @fkImovel 6;
+EXEC InserirImagem @nomeImagem = '6-2', @url = '', @fkImovel 6;
+EXEC InserirImagem @nomeImagem = '7-1', @url = '', @fkImovel 7;
+EXEC InserirImagem @nomeImagem = '7-2', @url = '', @fkImovel 7;
+EXEC InserirImagem @nomeImagem = '8-1', @url = '', @fkImovel 8;
+EXEC InserirImagem @nomeImagem = '8-2', @url = '', @fkImovel 8;
+EXEC InserirImagem @nomeImagem = '9-1', @url = '', @fkImovel 9;
+EXEC InserirImagem @nomeImagem = '9-2', @url = '', @fkImovel 9;
 ----------------------------------------------------------------------------------------------
 --TABELA TipoContato--------------------------------------------------------------------------
 IF OBJECT_ID('InserirDado', 'P') IS NOT NULL

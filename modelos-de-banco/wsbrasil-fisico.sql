@@ -284,14 +284,14 @@ BEGIN
 END;
 
 EXEC InserirBairro @nomeBairro = 'Bairro A', @fkCidade = 1;
-EXEC InserirBairro @nomeBairro = 'Bairro B', @fkCidade = 1;
-EXEC InserirBairro @nomeBairro = 'Bairro C', @fkCidade = 1;
-EXEC InserirBairro @nomeBairro = 'Bairro X', @fkCidade = 2;
-EXEC InserirBairro @nomeBairro = 'Bairro Y', @fkCidade = 2;
-EXEC InserirBairro @nomeBairro = 'Bairro Z', @fkCidade = 2;
-EXEC InserirBairro @nomeBairro = 'Bairro 1', @fkCidade = 3;
-EXEC InserirBairro @nomeBairro = 'Bairro 2', @fkCidade = 3;
-EXEC InserirBairro @nomeBairro = 'Bairro 3', @fkCidade = 3;
+EXEC InserirBairro @nomeBairro = 'Bairro B', @fkCidade = 2;
+EXEC InserirBairro @nomeBairro = 'Bairro C', @fkCidade = 3;
+EXEC InserirBairro @nomeBairro = 'Bairro X', @fkCidade = 4;
+EXEC InserirBairro @nomeBairro = 'Bairro Y', @fkCidade = 5;
+EXEC InserirBairro @nomeBairro = 'Bairro Z', @fkCidade = 6;
+EXEC InserirBairro @nomeBairro = 'Bairro 1', @fkCidade = 7;
+EXEC InserirBairro @nomeBairro = 'Bairro 2', @fkCidade = 8;
+EXEC InserirBairro @nomeBairro = 'Bairro 3', @fkCidade = 9;
 
 --TABELA Endereco----------------------------------------------------------------------------
 IF OBJECT_ID('InserirEndereco','P') IS NOT NULL
@@ -480,8 +480,11 @@ exec InserirDadoContato @nome = 'Fabio Martins', @email = 'fabio.martins@globo.c
 exec InserirDadoContato @nome = 'Fabio Martins', @email = 'gabriela.alves@zoho.com', @mensagem = 'Gostaria de fazer uma sugestão de melhoria.', @fk = 5;
 ----------------------------------------------------------------------------------------------
 --SESSÃO JOIN---------------------------------------------------------------------------------
-SELECT Imovel.Qtd_vaga, Imovel.Qtd_quarto, Imovel.Qtd_suite, Imovel.Qtd_banheiro, Imovel.Area_util, Imovel.Valor_imovel, Imovel.Observacoes, TipoImovel.NomeTipoImovel, TipoAnuncio.Nome_Tipo_Anuncio, Endereco.Logradouro, Endereco.Numero, Endereco.Complemento, Bairro.Nome_bairro, Cidade.Nome_cidade, UF.Nome_UF, UF.Sigla_UF 
+--SELECT IMOVEL/ENDEREÇO/IMAGEM---------------------------------------------------------------
+SELECT Imagem.Nome_Imagem, Imagem.url, Imovel.Qtd_vaga, Imovel.Qtd_quarto, Imovel.Qtd_suite, Imovel.Qtd_banheiro, Imovel.Area_util, Imovel.Valor_imovel, Imovel.Observacoes, TipoImovel.NomeTipoImovel, TipoAnuncio.Nome_Tipo_Anuncio, Endereco.Logradouro, Endereco.Numero, Endereco.Complemento, Bairro.Nome_bairro, Cidade.Nome_cidade, UF.Nome_UF, UF.Sigla_UF 
 FROM Imovel
+JOIN Imagem
+ON Imagem.ID = Imagem.fk_Imovel_ID
 JOIN TipoImovel 
 ON TipoImovel.ID = Imovel.fk_TipoImovel_ID
 JOIN TipoAnuncio
@@ -496,6 +499,18 @@ JOIN UF
 ON UF.ID = Cidade.fk_UF_ID
 ;
 
+--SELECT LOGIN---------------------------------------------------------------------------------
+SELECT Usuario.Nome, Login_Usuario.Email, Login_Usuario.Senha, Usuario.DataHoraUltimoAcesso 
+FROM login_Usuario
+JOIN Usuario
+ON Login_Usuario.Fk_Usuario_Id = Usuario.ID
+;
+--SELECT CONTATO-------------------------------------------------------------------------------
+SELECT ContatoSite.Nome, ContatoSite.Email, TipoContato.Nome, ContatoSite.Mensagem, ContatoSite.DataHora
+FROM ContatoSite
+JOIN TipoContato
+ON ContatoSite.fk_TipoContato_id = TipoContato.Id
+;
 -- SESSÃO DE MANUTENÇÃO
 --ALTERAR NOME DE TABELA
 exec sp_rename login_usuario, Login_Usuario ;
@@ -517,3 +532,9 @@ select * from ContatoSite;
 --EXCLUIR TABELA
 DROP TABLE TipoContato;
 DROP TABLE ContatoSite;
+Drop Table Imagem;
+DROP TABLE Imovel;
+DROP TABLE Endereco;
+DROP TABLE Bairro;
+DROP TABLE Cidade;
+DROP TABLE UF;

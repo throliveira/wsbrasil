@@ -478,6 +478,62 @@ exec InserirDadoContato @nome = 'Daniel Oliveira', @email = 'daniel.oliveira@ter
 exec InserirDadoContato @nome = 'Eduarda Rocha', @email = 'eduarda.rocha@icloud.com', @mensagem = 'Quero vender minha casa na sua imobiliária.', @fk = 3;
 exec InserirDadoContato @nome = 'Fabio Martins', @email = 'fabio.martins@globo.com', @mensagem = 'Preciso de ajuda para resolver um problema.', @fk = 4;
 exec InserirDadoContato @nome = 'Fabio Martins', @email = 'gabriela.alves@zoho.com', @mensagem = 'Gostaria de fazer uma sugestão de melhoria.', @fk = 5;
+
+--ALTERAR SENHA ------------------------------------------------------------------------------
+IF OBJECT_ID ('AlterarSenha','P') IS NOT NULL
+	DROP PROCEDURE AlterarSenha;
+GO
+
+CREATE PROCEDURE AlterarSenha
+
+@UsuarioID INT,
+@NovaSenha VARCHAR(32)
+AS
+
+BEGIN
+	UPDATE Usuario SET Senha = @NovaSenha
+	WHERE Usuario.ID = @UsuarioID
+END;
+
+EXEC AlterarSenha @UsuarioID = 1, @NovaSenha = 'kroatoan';
+
+--SELECIONAR IMÓVEL POR CIDADE----------------------------------------------------------------
+IF OBJECT_ID ('SelectImovelCidade','P') IS NOT NULL
+	DROP PROCEDURE SelectImovelCidade
+GO
+
+CREATE PROCEDURE SelectImovelCidade
+@Id INT
+AS
+BEGIN
+	SELECT Imovel.Valor_imovel, Endereco.Logradouro, Endereco.Complemento, Endereco.Numero, Cidade.Nome_cidade, UF.Nome_UF, UF.Sigla_UF, Bairro.Nome_bairro 
+	FROM Imovel
+	JOIN Endereco ON Imovel.fk_Endereco_ID = Endereco.ID
+	JOIN Bairro ON Endereco.fk_Bairro_ID = Bairro.ID
+	JOIN Cidade ON Bairro.fk_Cidade_ID = Cidade.ID
+	JOIN UF ON Cidade.fk_UF_ID = UF.ID
+	WHERE Cidade.ID = @Id;
+END;
+
+EXEC SelectImovelCidade @Id = 5;
+--FUNCTION PARA RETORNAR O TOTAL DEOS IMÓVEIS SELECIONADOS POR TIPO---------------------------
+
+	DROP FUNCTION if exists CalcularValorTotalTipo;
+GO
+
+CREATE FUNCTION CalcularValorTotalTipo (@TipoImovel INT)
+RETURNS DECIMAL(10,2)
+AS
+BEGIN
+	DECLARE @ValorTotal DECIMAL;
+	SELECT @ValorTotal = SUM(Valor_Imovel)
+	FROM Imovel
+	WHERE fk_TipoImovel_ID = @TipoImovel;
+	RETURN @ValorTotal;
+END;
+
+SELECT dbo.CalularValorTotalTipo(1) as ValorTotalImoveis;
+
 ----------------------------------------------------------------------------------------------
 --SESSÃO JOIN---------------------------------------------------------------------------------
 --SELECT IMOVEL/ENDEREÇO/IMAGEM---------------------------------------------------------------

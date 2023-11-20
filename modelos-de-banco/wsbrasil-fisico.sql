@@ -438,7 +438,7 @@ EXEC InserirDado @nome = 'Quero vender';
 EXEC InserirDado @nome = 'Crítica';
 EXEC InserirDado @nome = 'Sugestões';
 
---TABELA ContatoSite---------------------------------------------------------------------------
+--TABELA ContatoSite--------------------------------------------------------------------------
 IF OBJECT_ID('InserirDadoContato', 'P') IS NOT NULL
 	DROP PROCEDURE InserirDadoContato;
 GO
@@ -518,7 +518,8 @@ END;
 EXEC SelectImovelCidade @Id = 5;
 --FUNCTION PARA RETORNAR O TOTAL DEOS IMÓVEIS SELECIONADOS POR TIPO---------------------------
 
-	DROP FUNCTION if exists CalcularValorTotalTipo;
+IF OBJECT_ID('dbo.CalcularValorTotalTipo', 'FN') IS NOT NULL
+    DROP FUNCTION dbo.CalcularValorTotalTipo;
 GO
 
 CREATE FUNCTION CalcularValorTotalTipo (@TipoImovel INT)
@@ -532,7 +533,7 @@ BEGIN
 	RETURN @ValorTotal;
 END;
 
-SELECT dbo.CalularValorTotalTipo(1) as ValorTotalImoveis;
+SELECT dbo.CalcularValorTotalTipo(1) as ValorTotalImoveis;
 
 ----------------------------------------------------------------------------------------------
 --SESSÃO JOIN---------------------------------------------------------------------------------

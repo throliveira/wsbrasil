@@ -516,7 +516,39 @@ BEGIN
 END;
 
 EXEC SelectImovelCidade @Id = 5;
+GO
+----------------------------------------------------------------------------------------------
+IF OBJECT_ID ('ImoveisPorTipoAnuncio','P') IS NOT NULL
+	DROP PROCEDURE ImoveisPorTipoAnuncio
+GO
 
+CREATE PROCEDURE ImoveisPorTipoAnuncio
+@idTipo INT
+AS
+BEGIN
+	SELECT *
+	FROM Imovel
+	JOIN TipoAnuncio ON Imovel.fk_TipoAnuncio_ID = TipoAnuncio.ID
+	WHERE fk_TipoAnuncio_ID = @idTipo;
+END;
+
+EXEC ImoveisPorTipoAnuncio @idTipo = 2;
+GO
+----------------------------------------------------------------------------------------------
+IF OBJECT_ID ('Aumento','P') IS NOT NULL
+	DROP PROCEDURE Aumento
+GO
+
+CREATE PROCEDURE Aumento
+@fatorAumento FLOAT
+AS
+BEGIN
+	UPDATE Imovel
+	SET Valor_Imovel = Valor_Imovel * @fatorAumento;
+END;
+GO
+
+EXEC Aumento @fatorAumento = 1.5;
 --FUNCTIONS-----------------------------------------------------------------------------------
 --FUNCTION PARA RETORNAR O TOTAL DEOS IMÓVEIS SELECIONADOS POR TIPO---------------------------
 IF OBJECT_ID('dbo.CalcularValorTotalTipo', 'FN') IS NOT NULL
@@ -535,7 +567,7 @@ BEGIN
 END;
 
 SELECT dbo.CalcularValorTotalTipo(1) as ValorTotalImoveis;
-
+GO
 --RETORNAR USUÁRIO E DATA DO ÚLTIMO LOGIN-----------------------------------------------------
 IF OBJECT_ID('dbo.RetornarUltimoLoginUsuario', 'FN') IS NOT NULL
     DROP FUNCTION dbo.RetornarUltimoLoginUsuario;
@@ -608,6 +640,19 @@ FROM ContatoSite
 JOIN TipoContato
 ON ContatoSite.fk_TipoContato_id = TipoContato.Id
 ;
+--VIEWS-----------------------------------------------------------------------------------------
+CREATE VIEW vw_DetalhesImovel 
+AS
+SELECT i.ID, i.Valor_imovel, e.Logradouro, e.Complemento, e.Numero, b.Nome_bairro , c.Nome_cidade, u.Nome_UF, u.Sigla_UF
+FROM Imovel i
+	JOIN Endereco e ON i.fk_Endereco_ID = e.ID
+	JOIN Bairro b ON e.fk_Bairro_ID = b.ID
+	JOIN Cidade c ON b.fk_Cidade_ID = c.ID
+	JOIN UF u ON c.fk_UF_ID = u.ID
+	WHERE Nome_UF = 'São Paulo';
+GO
+
+SELECT * FROM vw_DetalhesImovel;
 -- SESSÃO DE MANUTENÇÃO
 --ALTERAR NOME DE TABELA
 exec sp_rename login_usuario, Login_Usuario ;

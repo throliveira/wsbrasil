@@ -643,6 +643,8 @@ ON ContatoSite.fk_TipoContato_id = TipoContato.Id
 --VIEWS-----------------------------------------------------------------------------------------
 --Crie uma View para mostrar todos os detalhes do imóvel.---------------------------------------
 ----Chame essa View mostrando os imóveis de acordo com a cidade que você informa.---------------
+drop view vw_DetalhesImovel;
+go
 CREATE VIEW vw_DetalhesImovel 
 AS
 SELECT i.ID, i.Valor_imovel, e.Logradouro, e.Complemento, e.Numero, b.Nome_bairro , c.Nome_cidade, u.Nome_UF, u.Sigla_UF
@@ -650,27 +652,30 @@ FROM Imovel i
 	JOIN Endereco e ON i.fk_Endereco_ID = e.ID
 	JOIN Bairro b ON e.fk_Bairro_ID = b.ID
 	JOIN Cidade c ON b.fk_Cidade_ID = c.ID
-	JOIN UF u ON c.fk_UF_ID = u.ID
-	WHERE Nome_UF = 'São Paulo';
+	JOIN UF u ON c.fk_UF_ID = u.ID;
 GO
 
-SELECT * FROM vw_DetalhesImovel;
+SELECT * FROM vw_DetalhesImovel WHERE Nome_cidade = 'Rio de Janeiro';
 go
 --EXERCÍCIOS-23/11/2023-------------------------------------------------------------------------
 --Crie uma View para mostrar quantidade de imóveis por cidade.----------------------------------
+drop view vw_QtdImovelPorCidade;
+go
 CREATE VIEW vw_QtdImovelPorCidade
 AS
-SELECT COUNT(i.ID) AS QtdImoveis
+SELECT COUNT(i.ID) AS QtdImoveis, c.Nome_cidade
 FROM Imovel i
 	JOIN Endereco e ON i.fk_Endereco_ID = e.ID
 	JOIN Bairro b ON e.fk_Bairro_ID = b.ID
 	JOIN Cidade c ON b.fk_Cidade_ID = c.ID
-WHERE c.Nome_cidade = 'Guarulhos';
+GROUP BY c.Nome_cidade;
 GO
 
 SELECT * FROM vw_QtdImovelPorCidade;
 go
 --Crie uma View para mostrar a quantidade de imóveis por tipo de anúncio.-----------------------
+drop view vw_QtdImovelPorTipoAnuncio;
+go
 CREATE VIEW vw_QtdImovelPorTipoAnuncio
 AS
 SELECT t.Nome_Tipo_Anuncio, COUNT(i.ID) AS QtdImoveis, e.Logradouro, e.Complemento, e.Numero, b.Nome_bairro, c.Nome_cidade, u.Nome_UF, u.Sigla_UF 
@@ -680,19 +685,19 @@ FROM Imovel i
 	JOIN Bairro b ON e.fk_Bairro_ID = b.ID
 	JOIN Cidade c ON b.fk_Cidade_ID = c.ID
 	JOIN UF u ON c.fk_UF_ID = u.ID
-WHERE t.Nome_Tipo_Anuncio = 'vender'
 GROUP BY t.Nome_Tipo_Anuncio, e.Logradouro, e.Complemento, e.Numero, b.Nome_bairro, c.Nome_cidade, u.Nome_UF, u.Sigla_UF;
 GO
 
 SELECT * FROM vw_QtdImovelPorTipoAnuncio;
 go
 --Crie uma View para calcular a soma dos valores dos imóveis por tipo de imóvel.----------------
+drop view vw_SomarValorImovelPorTipo;
+go
 CREATE VIEW vw_SomarValorImovelPorTipo
 AS
 SELECT SUM(i.Valor_imovel) AS SomaImovelValor, ti.NomeTipoImovel
 FROM Imovel i
 	JOIN TipoImovel ti ON i.fk_TipoImovel_ID = ti.ID
-WHERE ti.NomeTipoImovel = 'casa'
 GROUP BY ti.NomeTipoImovel;
 GO
 
@@ -727,8 +732,9 @@ BEGIN
 END;
 go
 
-EXEC DeletarImoveisPorCidade @nomeCidade = 'Guarulhos';
+EXEC DeletarImoveisPorCidade @nomeCidade = 'Campinas';
 go
+
 ------------------------------------------------------------------------------------------------
 -- SESSÃO DE MANUTENÇÃO
 --ALTERAR NOME DE TABELA

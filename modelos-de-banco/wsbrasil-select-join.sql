@@ -1,4 +1,4 @@
-USE wsbrasil;
+USE WSBrasil;
 --SESSÃO JOIN---------------------------------------------------------------------------------
 --SELECT IMOVEL/ENDEREÇO/IMAGEM---------------------------------------------------------------
 SELECT Imagem.Nome_Imagem, Imagem.url, Imovel.Qtd_vaga, Imovel.Qtd_quarto, Imovel.Qtd_suite, Imovel.Qtd_banheiro, Imovel.Area_util, Imovel.Valor_imovel, Imovel.Observacoes, TipoImovel.NomeTipoImovel, TipoAnuncio.Nome_Tipo_Anuncio, Endereco.Logradouro, Endereco.Numero, Endereco.Complemento, Bairro.Nome_bairro, Cidade.Nome_cidade, UF.Nome_UF, UF.Sigla_UF 

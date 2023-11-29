@@ -94,9 +94,14 @@ go
 EXEC DeletarImoveisPorCidade @nomeCidade = 'Campinas';
 go
 --calcular a média de valores por metro quadrado dos imóveis diretamente------------------------
-SELECT ID, Area_util, FORMAT (Valor_imovel, 'C', 'pt-BR'), FORMAT( CAST( ROUND(
+CREATE VIEW vw_ValorImovelPOrMetroQuadrado
+AS
+SELECT ID, Area_util, FORMAT (Valor_imovel, 'C', 'pt-BR') AS ValorImovel, FORMAT( CAST( ROUND(
 	CASE
 		WHEN NULLIF(Area_util, 0) IS NULL THEN NULL
 		ELSE Valor_Imovel / NULLIF(Area_util, 0)
 	END, 2) AS DECIMAL (10, 2)), 'C', 'pt-BR') AS ValorPorMetroQuadrado
 FROM Imovel;
+GO
+
+SELECT * FROM vw_ValorImovelPOrMetroQuadrado;

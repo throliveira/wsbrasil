@@ -165,6 +165,45 @@ EXEC InserirEndereco @Logradouro = 'Praça Z', @Numero = 25, @Complemento = 'Casa
 EXEC InserirEndereco @Logradouro = 'Rua BH', @Numero = 8, @Complemento = 'Casa', @fkBairro = 7;
 EXEC InserirEndereco @Logradouro = 'Avenida U', @Numero = 18, @Complemento = 'Apartamento', @fkBairro = 8;
 EXEC InserirEndereco @Logradouro = 'Praça M', @Numero = 28, @Complemento = 'Casa', @fkBairro = 9;
+
+-- Inserção de novos endereços únicos
+
+-- São Paulo - Bairro A - Rua 2
+IF NOT EXISTS (SELECT 1 FROM Endereco WHERE Logradouro = 'Rua 2' AND Numero = 15 AND fk_Bairro_ID = 1)
+    EXEC InserirEndereco @Logradouro = 'Rua 2', @Numero = 15, @Complemento = 'Casa', @fkBairro = 1;
+
+-- São Paulo - Bairro B - Avenida 3
+IF NOT EXISTS (SELECT 1 FROM Endereco WHERE Logradouro = 'Avenida 3' AND Numero = 30 AND fk_Bairro_ID = 2)
+    EXEC InserirEndereco @Logradouro = 'Avenida 3', @Numero = 30, @Complemento = 'Apartamento', @fkBairro = 2;
+
+-- São Paulo - Bairro C - Praça 4
+IF NOT EXISTS (SELECT 1 FROM Endereco WHERE Logradouro = 'Praça 4' AND Numero = 45 AND fk_Bairro_ID = 3)
+    EXEC InserirEndereco @Logradouro = 'Praça 4', @Numero = 45, @Complemento = 'Casa', @fkBairro = 3;
+
+-- Rio de Janeiro - Bairro X - Rua Y
+IF NOT EXISTS (SELECT 1 FROM Endereco WHERE Logradouro = 'Rua Y' AND Numero = 20 AND fk_Bairro_ID = 4)
+    EXEC InserirEndereco @Logradouro = 'Rua Y', @Numero = 20, @Complemento = 'Casa', @fkBairro = 4;
+
+-- Rio de Janeiro - Bairro Y - Avenida Z
+IF NOT EXISTS (SELECT 1 FROM Endereco WHERE Logradouro = 'Avenida Z' AND Numero = 35 AND fk_Bairro_ID = 5)
+    EXEC InserirEndereco @Logradouro = 'Avenida Z', @Numero = 35, @Complemento = 'Apartamento', @fkBairro = 5;
+
+-- Rio de Janeiro - Bairro Z - Praça W
+IF NOT EXISTS (SELECT 1 FROM Endereco WHERE Logradouro = 'Praça W' AND Numero = 50 AND fk_Bairro_ID = 6)
+    EXEC InserirEndereco @Logradouro = 'Praça W', @Numero = 50, @Complemento = 'Casa', @fkBairro = 6;
+
+-- Minas Gerais - Bairro 1 - Rua C
+IF NOT EXISTS (SELECT 1 FROM Endereco WHERE Logradouro = 'Rua C' AND Numero = 25 AND fk_Bairro_ID = 7)
+    EXEC InserirEndereco @Logradouro = 'Rua C', @Numero = 25, @Complemento = 'Casa', @fkBairro = 7;
+
+-- Minas Gerais - Bairro 2 - Avenida V
+IF NOT EXISTS (SELECT 1 FROM Endereco WHERE Logradouro = 'Avenida V' AND Numero = 40 AND fk_Bairro_ID = 8)
+    EXEC InserirEndereco @Logradouro = 'Avenida V', @Numero = 40, @Complemento = 'Apartamento', @fkBairro = 8;
+
+-- Minas Gerais - Bairro 3 - Praça L
+IF NOT EXISTS (SELECT 1 FROM Endereco WHERE Logradouro = 'Praça L' AND Numero = 55 AND fk_Bairro_ID = 9)
+    EXEC InserirEndereco @Logradouro = 'Praça L', @Numero = 55, @Complemento = 'Casa', @fkBairro = 9;
+
 ----------------------------------------------------------------------------------------------
 --TABELA TipoAnuncio--------------------------------------------------------------------------
 IF OBJECT_ID('InserirTipoAnuncio','P') IS NOT NULL
@@ -229,6 +268,34 @@ EXEC InserirImovel @q_vaga = 3, @q_quarto = 4, @q_suite = 1, @q_banheiro = 3, @a
 EXEC InserirImovel @q_vaga = 2, @q_quarto = 3, @q_suite = 1, @q_banheiro = 3, @areaUtil = 250, @valorImovel = 250000, @observacoes = 'Localização nobre', @fkTipoImovel = 2, @fkEndereco = 8, @fkTipoAnuncio = 2;
 EXEC InserirImovel @q_vaga = 4, @q_quarto = 5, @q_suite = 2, @q_banheiro = 4, @areaUtil = 300, @valorImovel = 400000, @observacoes = 'Lareira aconchegante ', @fkTipoImovel = 1, @fkEndereco = 9, @fkTipoAnuncio = 1;
 
+-- Inserção de novos imóveis
+
+-- São Paulo - Bairro A - Rua 2
+EXEC InserirImovel @q_vaga = 3, @q_quarto = 4, @q_suite = 1, @q_banheiro = 3, @areaUtil = 250, @valorImovel = 300000, @observacoes = 'Ótima área de lazer', @fkTipoImovel = 1, @fkEndereco = 10, @fkTipoAnuncio = 1;
+
+-- São Paulo - Bairro B - Avenida 3
+EXEC InserirImovel @q_vaga = 2, @q_quarto = 3, @q_suite = 1, @q_banheiro = 3, @areaUtil = 250, @valorImovel = 250000, @observacoes = 'Vista incível', @fkTipoImovel = 2, @fkEndereco = 11, @fkTipoAnuncio = 2;
+
+-- São Paulo - Bairro C - Praça 4
+EXEC InserirImovel @q_vaga = 4, @q_quarto = 5, @q_suite = 2, @q_banheiro = 4, @areaUtil = 300, @valorImovel = 400000, @observacoes = 'Garagem espaçosa', @fkTipoImovel = 1, @fkEndereco = 12, @fkTipoAnuncio = 1;
+
+-- Rio de Janeiro - Bairro X - Rua Y
+EXEC InserirImovel @q_vaga = 3, @q_quarto = 4, @q_suite = 1, @q_banheiro = 3, @areaUtil = 250, @valorImovel = 350000, @observacoes = 'Suítes com banheira', @fkTipoImovel = 2, @fkEndereco = 13, @fkTipoAnuncio = 2;
+
+-- Rio de Janeiro - Bairro Y - Avenida Z
+EXEC InserirImovel @q_vaga = 2, @q_quarto = 3, @q_suite = 1, @q_banheiro = 3, @areaUtil = 250, @valorImovel = 290000, @observacoes = 'Ótiama localização', @fkTipoImovel = 1, @fkEndereco = 14, @fkTipoAnuncio = 1;
+
+-- Rio de Janeiro - Bairro Z - Praça W
+EXEC InserirImovel @q_vaga = 4, @q_quarto = 5, @q_suite = 2, @q_banheiro = 4, @areaUtil = 300, @valorImovel = 450000, @observacoes = 'Altíssimo padrão', @fkTipoImovel = 2, @fkEndereco = 15, @fkTipoAnuncio = 2;
+
+-- Minas Gerais - Bairro 1 - Rua C
+EXEC InserirImovel @q_vaga = 3, @q_quarto = 4, @q_suite = 1, @q_banheiro = 3, @areaUtil = 250, @valorImovel = 300000, @observacoes = 'Próximo à praia', @fkTipoImovel = 1, @fkEndereco = 16, @fkTipoAnuncio = 1;
+
+-- Minas Gerais - Bairro 2 - Avenida V
+EXEC InserirImovel @q_vaga = 2, @q_quarto = 3, @q_suite = 1, @q_banheiro = 3, @areaUtil = 250, @valorImovel = 250000, @observacoes = 'Localização nobre', @fkTipoImovel = 2, @fkEndereco = 17, @fkTipoAnuncio = 2;
+
+-- Minas Gerais - Bairro 3 - Praça L
+EXEC InserirImovel @q_vaga = 4, @q_quarto = 5, @q_suite = 2, @q_banheiro = 4, @areaUtil = 300, @valorImovel = 400000, @observacoes = 'Lareira aconchegante ', @fkTipoImovel = 1, @fkEndereco = 18, @fkTipoAnuncio = 1;
 
 --TABELA Imagem-------------------------------------------------------------------------------
 IF OBJECT_ID('InserirImagem','P') IS NOT NULL

@@ -8,6 +8,7 @@ AS
 	SELECT ID, Area_util, FORMAT(Valor_imovel, 'C','pt_BR') AS Valor_Imovel, FORMAT(Valor_imovel*0.7, 'C', 'pt-BR') AS Valor_Desconto
 	FROM Imovel;
 
+
 SELECT * FROM vw_Imovel_trinta_desconto WHERE Area_util BETWEEN 110 AND 330;
 --Faça uma consulta que busque as 5 cidades com a maior média de valor do metro quadrado.
 SELECT TOP 5
@@ -83,3 +84,20 @@ OVER: É usado em conjunto com funções de agregação ou analíticas para especifica
 
 No contexto da sua query, ao usar OVER (PARTITION BY U.Sigla_UF), as funções analíticas MAX e MIN estão sendo aplicadas a cada estado separadamente. Isso permite calcular a maior e a menor média por metro quadrado para cada estado individualmente, em vez de considerar todo o conjunto de dados ao calcular esses valores.
 */
+go
+with ValorMaxMin as (select
+U.Nome_UF,
+avg(I.Valor_imovel/I.Area_util) as Media
+from Imovel I
+	JOIN
+        Endereco E ON I.fk_Endereco_ID = E.ID
+    JOIN
+        Cidade C ON E.fk_Bairro_ID = C.ID
+    JOIN
+        UF U ON C.fk_UF_ID = U.ID
+		group by U.Nome_UF)
+select 
+max(vmn.Media) as medMaxEstados,
+min(vmn.Media) as medMinEstados
+
+from ValorMaxMin vmn;
